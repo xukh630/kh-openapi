@@ -2,9 +2,9 @@ package com.kh.openapi.common.utils;
 
 import com.alibaba.common.lang.StringUtil;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.commons.lang3.time.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,27 +24,12 @@ public class DateUtil {
 
     private final static Logger log = LoggerFactory.getLogger(DateUtil.class);
 
-    /**
-     * 日期格式化对象
-     */
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static String formatDate(Date date) {
+        return formatDate(date, "yyyy-MM-dd");
+    }
 
-    /**
-     * 日期时间格式化对象
-     */
-    private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    /**
-     * 把时间戳转换为yyyy-MM-dd HH:mm:ss格式时间字符串
-     *
-     * @param timestamp
-     * @return
-     */
-    public static String formatDateString(long timestamp) {
-
-        String str = DATE_TIME_FORMAT.format(timestamp);
-
-        return str;
+    public static String formatDateTime(Date date) {
+        return formatDate(date, "yyyy-MM-dd HH:mm:ss");
     }
 
     /**
@@ -112,10 +97,8 @@ public class DateUtil {
         clearTimes(date1);
         clearTimes(date2);
 
-        if (date1.equals(date2)) {
-
+        if (date1.equals(date2))
             return 0;
-        }
 
         long m1 = date1.getTimeInMillis();
         long m2 = date2.getTimeInMillis();
@@ -154,14 +137,6 @@ public class DateUtil {
         return formatter.format(date);
     }
 
-    public static String formatDate(Date date) {
-        return formatDate(date, "yyyy-MM-dd");
-    }
-
-    public static String formatDateTime(Date date) {
-        return formatDate(date, "yyyy-MM-dd HH:mm:ss");
-    }
-
     /**
      * 取得剩余时间
      *
@@ -169,10 +144,8 @@ public class DateUtil {
      * @return
      */
     public static String getRemainTime(Date date) {
-        if (date == null) {
-
+        if (date == null)
             return "";
-        }
 
         StringBuilder sb = new StringBuilder();
 
@@ -185,26 +158,20 @@ public class DateUtil {
 
         // 天
         long day = remain / 24 / 60 / 60 / 1000;
-        if (day > 0) {
-
+        if (day > 0)
             sb.append(day + "天");
-        }
 
         // 小时
         remain -= (day * 24 * 60 * 60 * 1000);
         long hour = remain / 60 / 60 / 1000;
-        if (hour > 0 || sb.length() > 0) {
-
+        if (hour > 0 || sb.length() > 0)
             sb.append(hour + "时");
-        }
 
         // 分
         remain -= (hour * 60 * 60 * 1000);
         long minute = remain / 60 / 1000;
-        if (minute > 0 || sb.length() > 0) {
-
+        if (minute > 0 || sb.length() > 0)
             sb.append(minute + "分");
-        }
 
         return sb.toString();
     }
@@ -236,11 +203,9 @@ public class DateUtil {
      * @param d2
      * @return
      */
-    public static final boolean dateCompare(Date d1, Date d2) {
-        if (d1 == null || d2 == null) {
-
+    public static boolean dateCompare(Date d1, Date d2) {
+        if (d1 == null || d2 == null)
             return false;
-        }
         try {
             Calendar c1 = Calendar.getInstance();
             c1.setTime(d1);
@@ -249,10 +214,8 @@ public class DateUtil {
 
             long p1 = c1.getTimeInMillis();
             long p2 = c2.getTimeInMillis();
-            if (p1 > p2) {
-
+            if (p1 > p2)
                 return true;
-            }
         } catch (Exception e) {
             return false;
         }
@@ -264,7 +227,7 @@ public class DateUtil {
      *
      * @return
      */
-    public static final String getNowDateTimeStr() {
+    public static String getNowDateTimeStr() {
 
         return DateTime.now().toString("yyyyMMddHHmmss");
     }
@@ -274,7 +237,7 @@ public class DateUtil {
      *
      * @return
      */
-    public static final String getNowDateStr() {
+    public static String getNowDateStr() {
 
         return DateTime.now().toString("yyyyMMdd");
     }
@@ -284,7 +247,7 @@ public class DateUtil {
      *
      * @return
      */
-    public static final int getNowDate() {
+    public static int getNowDate() {
 
         return Integer.valueOf(DateTime.now().toString("yyyyMMdd"));
     }
@@ -300,12 +263,13 @@ public class DateUtil {
     }
 
     /**
-     * 获得昨天的int类型yyyyMMdd
+     * 获得当前时间的字符串自定义转换类型
      *
      * @return
      */
-    public static int getYesterdayDate() {
-        return Integer.valueOf(DateTime.now().plusDays(-1).toString("yyyyMMdd"));
+    public static String getNowDateFormat(String format) {
+
+        return DateTime.now().toString(format);
     }
 
     /**
@@ -313,9 +277,9 @@ public class DateUtil {
      *
      * @return
      */
-    public static final long getNow() {
+    public static long getNow() {
 
-        return System.currentTimeMillis();
+        return DateTime.now().getMillis();
     }
 
     /**
@@ -327,45 +291,89 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    public static Map<String, Long> getRangeByStr(String yyyyMMdd) {
+    /**
+     * 传入的日期是否在3个月内不包括今天
+     *
+     * @param createDay
+     * @return
+     */
+    public static boolean isScopeByThreeMonth(Integer createDay) {
 
-        Date date = null;
-        try {
-            date = DateUtils.parseDate(yyyyMMdd, "yyyyMMdd");
-        } catch (ParseException e) {
+        Integer today = Integer.valueOf(DateTime.now().toString("yyyyMMdd"));
+        Integer threeMonth = Integer.valueOf(DateTime.now().plusMonths(-3).toString("yyyyMMdd"));
 
-            log.error("日期转换出错：e = {}", ExceptionUtils.getStackTrace(e));
+        return createDay >= threeMonth && createDay < today;
+    }
+
+    /**
+     * 传入的日期是否在3个月内包括今天
+     *
+     * @param createDay
+     * @return
+     */
+    public static boolean isScopeByThreeMonthAndToday(Integer createDay) {
+
+        Integer today = Integer.valueOf(DateTime.now().toString("yyyyMMdd"));
+        Integer threeMonth = Integer.valueOf(DateTime.now().plusMonths(-3).toString("yyyyMMdd"));
+
+        return createDay >= threeMonth && createDay <= today;
+    }
+
+    public static long getWxPayTime(String timeEnd) {
+
+        Long payTime = DateUtil.getNow();
+
+        if (StringUtils.isNotBlank(timeEnd)) {
+            Date date = DateUtil.toDate(timeEnd, "yyyyMMddHHmmss");
+            payTime = date.getTime();
         }
-        return getRangeByDate(date);
+
+        return payTime;
     }
 
-    public static Map<String, Long> getRangeByDate(Date date) {
+    /**
+     * 获得微信支付完成时间，用来防止日切
+     *
+     * @return
+     */
+    public static Date getWxPayAcrossDayTime() {
 
-        long minTime = new DateTime(date)  //
-            .hourOfDay()    //
-            .withMinimumValue() //
-            .minuteOfHour() //
-            .withMinimumValue() //
-            .secondOfMinute()   //
-            .withMinimumValue() //
-            .getMillis();   //
-        long maxTime = new DateTime(date)  //
-            .hourOfDay()    //
-            .withMaximumValue() //
-            .minuteOfHour() //
-            .withMaximumValue() //
-            .secondOfMinute()   //
-            .withMaximumValue() //
-            .getMillis();   //
+        DateTime now = DateTime.now();
+        DateTime endTime =
+            new DateTime(now.getYear(), now.getMonthOfYear(), now.getDayOfMonth(), 23, 54, 59);
 
-        Map<String, Long> timeMap = Maps.newHashMap();
-        timeMap.put("minTime", minTime);
-        timeMap.put("maxTime", maxTime);
-
-        return timeMap;
+        // 如果结束时间在当前时间后
+        if (endTime.isBeforeNow()) {
+            endTime = now.plusMinutes(5);
+        }
+        return endTime.toDate();
     }
 
+    /**
+     * 获得翼支付完成时间，用来防止日切
+     *
+     * @return
+     */
+    public static String getBestpayAcrossDayTime(long time) {
 
+        DateTime now = new DateTime(time);
+        DateTime endTime = new DateTime(
+                now.getYear(),
+                now.getMonthOfYear(),
+                now.getDayOfMonth(),
+                23,
+                44,
+                58
+        );
+
+        // 如果结束时间在当前时间后
+        if (endTime.isAfter(now)) {
+            endTime = now.plusMinutes(15);
+        } else {
+            endTime = endTime.plusMinutes(15);
+        }
+        return endTime.toString("yyyyMMddHHmmss");
+    }
 
     /**
      * 把时间字符串转时间戳
@@ -373,33 +381,106 @@ public class DateUtil {
      * @param time
      * @return
      */
-    public static Long formatMillis(String time, String formatType) {
+    public static long formatMillis(String time, String formatType) {
         DateFormat format = new SimpleDateFormat(formatType);
         Date date;
         try {
             date = format.parse(time);
             return date.getTime();
         } catch (ParseException e) {
-            return null;
+            return 0L;
         }
     }
 
-    public static Long getDateMillisByMillis(Long timestamp){
-        String s = formatDateString(timestamp);
-        Long millis = formatMillis(s, "yyyyMMdd");
-        return millis;
+    /**
+     * 获得特定时间的时间戳
+     *
+     * @return
+     */
+    public static long getMillisByString(String time, String forMate) {
+        return DateTimeFormat.forPattern(forMate).parseDateTime(time).getMillis();
     }
 
-    public static Integer formatDateInteger(Long timestamp){
-        String time = new SimpleDateFormat("yyyyMMdd").format(timestamp);
-        return Integer.valueOf(time);
+    /**
+     * 获得特定时间戳的格式化字符串
+     *
+     * @return
+     */
+    public static String getStringByMillis(long millis, String formatType) {
+
+        return new DateTime(millis).toString(formatType);
     }
 
-    public static Date getDateByMills(Long timestamp) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String format = simpleDateFormat.format(timestamp);
-        Date parse = simpleDateFormat.parse(format);
-        return parse;
+    /**
+     * Map: 开始时间 key = startTime  结束时间 key = endTime
+     * 获得当天的开始与结束时间
+     *
+     * @return
+     */
+    public static Map<String, Long> getCurrentStartAndEnd() {
+
+        return getStartAndEndByDay(DateTime.now().toString("yyyyMMdd"));
+    }
+
+    /**
+     * Map: 开始时间 key = startTime  结束时间 key = endTime
+     * @return
+     */
+    public static Map<String, Long> getYesterdayStartAndEnd(){
+
+        return getStartAndEndByDay(DateTime.now().plusDays(-1).toString("yyyyMMdd"));
+    }
+
+    /**
+     * Map: 开始时间 key = startTime  结束时间 key = endTime
+     * 获得指定时间的开始与结束时间
+     * @param day
+     * @return
+     */
+    public static Map<String, Long> getStartAndEndByDay(String day) {
+
+        DateTime dayTime = DateTime.parse(day, DateTimeFormat.forPattern("yyyyMMdd"));
+        // 获得昨天开始与结束时间
+        long startTime = dayTime.withTimeAtStartOfDay().getMillis();
+        long endTime = dayTime.plusDays(1).withTimeAtStartOfDay().getMillis();
+
+        Map<String, Long> params = Maps.newHashMap();
+        params.put("startTime", startTime);
+        params.put("endTime", endTime);
+
+        return params;
+    }
+
+    /**
+     * 根据订单号获得订单日日期
+     * @param orderSn
+     * @return
+     */
+    public static Date getDateByOrderSn(String orderSn){
+
+        String date = orderSn.substring(0, 8);
+        DateTime dateTime = DateTime.parse(date, DateTimeFormat.forPattern("yyyyMMdd"));
+        return dateTime.toDate();
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(getCurrentStartAndEnd());
+        System.err.println(getMillisByString("1970-01-01 08:00:00", "yyyy-MM-dd HH:mm:ss"));
+        System.err.println(getBestpayAcrossDayTime(1484192267000L));
+
+    }
+
+    /**
+     * 20170529   转为    1495987200
+     * @param day
+     * @return
+     * @throws ParseException
+     */
+    public static Long getTimestampByday(Integer day) throws ParseException {
+        SimpleDateFormat s = new SimpleDateFormat("yyyyMMdd");
+        Date date = s.parse(String.valueOf(day));
+        long l = date.getTime() / 1000;
+        return l;
     }
 }
-

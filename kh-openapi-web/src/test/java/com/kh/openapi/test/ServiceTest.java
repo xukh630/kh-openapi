@@ -31,11 +31,9 @@ public class ServiceTest extends BaseTest {
     @Test
     public void serviceTest(){
         User user = new User();
-        user.setId(9);
+        user.setId(10);
         user.setUsername("徐楷洪");
         user.setPassword("123456");
-        user.setCreateTime(DateUtil.getNow());
-        user.setStatus(1);
         int result = userMapperExt.insertSelective(user);
         System.out.println(result);
         assert (result == 1);

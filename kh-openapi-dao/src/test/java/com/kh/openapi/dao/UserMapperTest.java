@@ -41,8 +41,6 @@ public class UserMapperTest {
         User user = new User();
         user.setUsername("徐楷洪");
         user.setPassword("123456");
-        user.setCreateTime(DateUtil.getNow());
-        user.setStatus(1);
         int result = userMapper.insertSelective(user);
         System.out.println(result);
         assert (result == 1);

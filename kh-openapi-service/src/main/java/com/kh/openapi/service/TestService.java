@@ -40,8 +40,6 @@ public class TestService implements ITestService {
         User user = new User();
         user.setUsername("徐楷洪");
         user.setPassword("123456");
-        user.setCreateTime(DateUtil.getNow());
-        user.setStatus(1);
         userMapperExt.insert(user);
     }
 

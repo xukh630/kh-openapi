@@ -7,7 +7,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * 项目：liquidator-platform-openapi
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
  * 时间：2016-08-10 10:24
  * 作者：Mr.Kiwi
  */
-@Component
 public final class SpringUtils implements BeanFactoryPostProcessor {
 
     private static ConfigurableListableBeanFactory beanFactory; // Spring应用上下文环境
