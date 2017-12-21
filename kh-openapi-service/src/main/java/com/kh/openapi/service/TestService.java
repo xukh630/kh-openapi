@@ -7,12 +7,17 @@ import com.kh.openapi.dao.UserMapperExt;
 import com.kh.openapi.facade.ITestService;
 import com.kh.openapi.model.User;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.joda.time.DateTime;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 所在的包名: com.kh.openapi.service
@@ -88,4 +93,27 @@ public class TestService implements ITestService {
     }
 
 
+    public static void main(String[] args) {
+        String a = "20171231";
+
+        String specifiedDayAfter = getSpecifiedDayAfter(a);
+
+        System.out.println(specifiedDayAfter);
+
+
+    }
+    public static String getSpecifiedDayAfter(String specifiedDay){
+        Calendar c = Calendar.getInstance();
+        Date date=null;
+        try {
+            date = new SimpleDateFormat("yyyyMMdd").parse(specifiedDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.setTime(date);
+        int day=c.get(Calendar.DATE);
+        c.set(Calendar.DATE,day+1);
+        String dayAfter=new SimpleDateFormat("yyyyMMdd").format(c.getTime());
+        return dayAfter;
+    }
 }

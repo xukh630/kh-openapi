@@ -32,7 +32,7 @@ public class UserTest extends BaseTest {
     @Test
     public void add(){
         User user = new User();
-        user.setId(12);
+        user.setId(13);
         user.setUsername("xukh");
         user.setPassword("123456");
         user.setNickname("xukh");

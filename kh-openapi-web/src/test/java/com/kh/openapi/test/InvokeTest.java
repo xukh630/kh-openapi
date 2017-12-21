@@ -3,6 +3,7 @@ package com.kh.openapi.test;
 import com.kh.openapi.common.utils.PingYinUtil;
 import com.kh.openapi.common.utils.SpringUtils;
 import org.junit.Test;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,6 +17,8 @@ import java.lang.reflect.Method;
  * @Date: Created in 16:14 2017/11/11
  */
 public class InvokeTest extends BaseTest{
+
+    private static ConfigurableListableBeanFactory beanFactory;
 
     @Test
     public void invoke() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

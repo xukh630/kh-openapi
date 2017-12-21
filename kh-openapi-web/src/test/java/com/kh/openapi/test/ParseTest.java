@@ -1,6 +1,9 @@
 package com.kh.openapi.test;
 
 
+import com.kh.openapi.common.result.ResultModle;
+import com.kh.openapi.common.utils.JsonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -45,5 +48,43 @@ public class ParseTest extends BaseTest {
         }
 
         System.out.println(map.get("b"));
+    }
+
+    @Test
+    public void jdMerchantCreateParse(){
+        String result = "{'return_value': '{\"SUCCESS\":true,\"DATA\":[{\"id\":\"222945311234567\",\"succ\":true,\"code\":\"SUCC001\"},{\"id\":\"22294531W0000001\",\"succ\":true,\"code\":\"SUCC001\"}],\"CODE\":\"SUCC001\"}', 'success': True}";
+
+        if (StringUtils.isBlank(result)) {
+
+
+            System.out.println("京东通信失败");
+        }
+        //解析返回值
+
+        Map map = JsonUtil.toMap(result);
+
+        Map resultMap = JsonUtil.toHashMap(result);
+        if (resultMap == null || resultMap.isEmpty() || resultMap.get("is_success") == null) {
+
+            System.out.println("发起查询失败");
+        }
+        String isSuccess = resultMap.get("is_success").toString();
+        //失败情况
+        if ("N".equalsIgnoreCase(isSuccess)) {
+            System.out.println((String) resultMap.get("fail_code") + (String) resultMap.get("fail_reason"));
+        }
+        //解析data
+        Map dataMap = JsonUtil.toHashMap(resultMap.get("data").toString());
+        if (dataMap == null || dataMap.isEmpty()) {
+
+            System.out.println("发起查询失败");
+        }
+
+        System.out.println(dataMap);
+    }
+
+
+    public static void main(String[] args) {
+
     }
 }

@@ -483,4 +483,19 @@ public class DateUtil {
         long l = date.getTime() / 1000;
         return l;
     }
+
+    public static String getSpecifiedDayAfter(String specifiedDay){
+        Calendar c = Calendar.getInstance();
+        Date date=null;
+        try {
+            date = new SimpleDateFormat("yyyyMMdd").parse(specifiedDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.setTime(date);
+        int day=c.get(Calendar.DATE);
+        c.set(Calendar.DATE,day+1);
+        String dayAfter=new SimpleDateFormat("yyyyMMdd").format(c.getTime());
+        return dayAfter;
+    }
 }

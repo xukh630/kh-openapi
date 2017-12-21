@@ -5,14 +5,20 @@ import com.kh.openapi.common.utils.PingYinUtil;
 import com.kh.openapi.common.utils.ResourceUtil;
 import com.kh.openapi.common.utils.SpringUtils;
 import com.kh.openapi.facade.ITestService;
+import com.kh.openapi.model.User;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import sun.plugin2.message.Message;
 import sun.plugin2.message.Serializer;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -79,10 +85,32 @@ public class TestController {
     }*/
 
     public static void main(String[] args) {
-        BigDecimal b = new BigDecimal("-0.1");
+        int i = 0;
+        User user = new User();
 
-        int i = b.compareTo(BigDecimal.ZERO);
-        System.out.println(i);
+        i = user.getId();
+
+    }
+
+    @RequestMapping("/h5")
+    public ModelAndView h5(@RequestParam String url,
+                           @RequestParam(name = "package") String packages,
+                           HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+
+        response.addHeader("Referer","openapi-liquidation-test.51fubei.com");
+        request.setAttribute("url",url);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        ModelMap modelMap = new ModelMap();
+        modelMap.put("url",url);
+        //modelMap.put("urls",split[0]);
+        //modelMap.put("package",split[1]);
+
+
+        return new ModelAndView("wxPay", modelMap);
+
     }
 
 }
