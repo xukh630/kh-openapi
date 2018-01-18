@@ -9,9 +9,13 @@ import com.kh.openapi.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.testng.collections.Maps;
+import org.testng.collections.Sets;
 
 import javax.annotation.Resource;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 所在的包名: com.kh.openapi.test
@@ -47,13 +51,31 @@ public class UserTest extends BaseTest {
 
 
     public static void main(String[] args) {
-        PayPlatform payPlatform = PayPlatform.valueOf(6);
 
-        System.out.println(payPlatform);
+        Set set = Sets.newHashSet();
 
-        LinkedList<Object> objects = new LinkedList<>();
+        User user = new User();
+        user.setId(1);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        StringBuffer stringBuffer = new StringBuffer();
+        User user1 = new User();
+        user1.setId(1);
+
+        set.add(user);
+        set.add(user1);
+
+        System.out.println(set.size());
+        System.out.println(set.contains(user));
+        System.out.println(set.contains(user1));
+        System.out.println(user==user1);
+        System.out.println(user.hashCode()==user.hashCode());
+
+        Map<Object, Object> map = Maps.newHashMap();
+        map.put("1","1");
+        map.put("1","2");
+
+        System.out.println(map.size());
+        System.out.println(map.get("1"));
+
+
     }
 }

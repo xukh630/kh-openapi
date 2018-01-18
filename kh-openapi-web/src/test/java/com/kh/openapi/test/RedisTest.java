@@ -62,16 +62,22 @@ public class RedisTest extends BaseTest {
         stringRedisTemplate.opsForSet().add("bankno", "1");
         stringRedisTemplate.opsForSet().add("bankno", "3");
         stringRedisTemplate.opsForSet().add("bankno", "2");
+        stringRedisTemplate.opsForSet().add("bankno", "0");
+        stringRedisTemplate.opsForSet().add("bankno", "5");
 
         stringRedisTemplate.opsForSet().add("banknotemp", "2");
         stringRedisTemplate.opsForSet().add("banknotemp", "3");
         stringRedisTemplate.opsForSet().add("banknotemp", "4");
 
         Set<String> difference = stringRedisTemplate.opsForSet().difference("bankno", "banknotemp");
-
+        Long aLong = stringRedisTemplate.opsForSet().differenceAndStore( "bankno", "banknotemp","bankdiff");
         for (String string:difference) {
             System.out.println(string);
         }
+
+        System.out.println(aLong);
+
+        System.out.println(stringRedisTemplate.opsForSet().members("bankdiff"));
 
     }
 

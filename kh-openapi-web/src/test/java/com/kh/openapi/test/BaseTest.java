@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * @Date: Created in 17:08 2017/11/9
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath*:spring/spring-context*.xml"})
+@ContextConfiguration(locations = {"classpath*:spring/spring-context*.xml","classpath*:spring/spring-aop.xml"})
 public class BaseTest {
 
 }

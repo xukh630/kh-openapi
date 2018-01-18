@@ -3,6 +3,7 @@ package com.kh.openapi.test;
 import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.google.common.collect.Sets;
 import com.kh.openapi.common.utils.HttpUtil;
 import com.kh.openapi.common.utils.PingYinUtil;
 import com.kh.openapi.common.utils.ResourceUtil;
@@ -10,6 +11,7 @@ import com.kh.openapi.common.utils.SpringUtils;
 import com.kh.openapi.dao.LpApiListMapperExt;
 import com.kh.openapi.facade.IApiControllerService;
 import com.kh.openapi.model.LpApiList;
+import com.kh.openapi.model.User;
 import org.junit.Test;
 import org.testng.collections.Maps;
 
@@ -17,7 +19,9 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 所在的包名: com.kh.openapi.test
@@ -160,8 +164,22 @@ public class PostTest extends BaseTest {
     }
 
     public static void main(String[] args) {
-        Object testService = SpringUtils.getBean("testService");
+        /*Object testService = SpringUtils.getBean("testService");
 
         System.out.println(testService.toString());
+        Set set = Sets.newHashSet();
+
+        User user = new User();
+        user.setId(1);
+
+        User user1 = new User();
+        user1.setId(1);
+
+        set.add(user);
+        set.add(user1);
+
+        System.out.println(set.size());*/
+        System.out.println(111);
+
     }
 }

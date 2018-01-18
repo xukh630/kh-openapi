@@ -33,6 +33,11 @@ public class DateUtil {
     }
 
     /**
+     * 日期时间格式化对象
+     */
+    private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    /**
      * 把字符串转换为日期
      *
      * @param dateStr
@@ -80,6 +85,19 @@ public class DateUtil {
         date.set(Calendar.MINUTE, 0);
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
+    }
+
+    /**
+     * 把时间戳转换为yyyy-MM-dd HH:mm:ss格式时间字符串
+     *
+     * @param timestamp
+     * @return
+     */
+    public static String formatDateString(long timestamp) {
+
+        String str = DATE_TIME_FORMAT.format(timestamp);
+
+        return str;
     }
 
     /**
