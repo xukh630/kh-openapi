@@ -203,6 +203,22 @@ public class DoTest extends BaseTest {
         System.out.println(dateTime);
     }
 
+    @Test
+    public void setNotRepeat() {
+        Set<String> set = new HashSet<>();
+
+        set.add("1");
+        System.out.println(set.size());
+        set.add("2");
+        System.out.println(set.size());
+        set.add("3");
+        System.out.println(set.size());
+        set.add("4");
+        System.out.println(set.size());
+        set.add("1");
+        System.out.println(set.size());
+    }
+
 
 
 

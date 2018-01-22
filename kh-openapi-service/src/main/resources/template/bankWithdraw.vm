@@ -1,0 +1,5 @@
+JF1001|5.0.0|$!{totalMoney}|$!{totalCount}||
+agentNo|merId|orderId|currencyCode|txnAmt|accType|accNo|customerNm|bizType|certifTp|certifId|phoneNo|postscript
+#foreach( $info in $list)
+$!{info.liquidatorId}|307333060120002|$!{info.storeId}|156|$!{info.totalNetMoney}|01|$!{info.bankNo}|$!{info.username}|000401||||
+#end

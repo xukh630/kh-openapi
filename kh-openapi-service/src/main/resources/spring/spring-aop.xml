@@ -8,12 +8,10 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
     <!--  开启注解 -->
-    <context:component-scan base-package="com.kh.openapi.service.aop.annotation"/>
+    <context:component-scan base-package="com.kh.openapi.service.aop.other"/>
     <!--  开启aop注解方式 -->
     <aop:aspectj-autoproxy/>
-
 
     <!-- 横切关注点          对哪些方法进行拦截，拦截后怎么处理，这些关注点称之为横切关注点-->
     <!-- 切面(aspect)       类是对物体特征的抽象，切面就是对横切关注点的抽象-->                       <!--抽取出来的需要执行的部分公共部分 (所有的方法都要打日志,校验参数)-->
@@ -34,10 +32,10 @@
     <bean id="randomNum" class="com.kh.openapi.service.aop.impl.RandomNum"/>
 
     <aop:config proxy-target-class="true">
-        <aop:aspect id="time" ref="timeHandler" order="1">
+        <aop:aspect id="time" ref="timeHandler" order="1">                      <!--切面-->
             <aop:pointcut id="addAllMethod" expression="execution(* com.kh.openapi.service.aop.AopTest.doPrint(..))"/>
-            <aop:before method="printTime" pointcut-ref="addAllMethod"/>
-            <aop:after method="printTime" pointcut-ref="addAllMethod"/>
+            <aop:before method="printTime" pointcut-ref="addAllMethod"/>        <!--通知-->
+            <aop:after method="printDate" pointcut-ref="addAllMethod"/>         <!--通知-->
         </aop:aspect>
         <aop:aspect id="random" ref="randomNum" order="2">
             <aop:pointcut id="allMethod" expression="execution(* com.kh.openapi.service.aop.AopTest.*(..))"/>
