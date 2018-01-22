@@ -133,9 +133,20 @@ public class PostTest extends BaseTest {
         System.out.println(result);
     }
 
-    public Map<String, Object> assemblyParamsQueryMerchant() {
+    public Map<String, Object> assemblyParamsJdMerchantCreate() {
         Map<String, Object> content = Maps.newHashMap();
-        content.put("sub_merchant_id", "20170728101532026951");
+        content.put("store_id", "20171116202306023891");
+        content.put("business", "004");
+        content.put("merchant_name", "(测试)商户名称");
+        content.put("merchant_shortname", "(测试)商户简称");
+        content.put("store_address", "(测试)商户地址");
+
+        return content;
+    }
+
+    public Map<String,Object> assemblyParamsQueryMerchant(){
+        Map<String, Object> content = Maps.newHashMap();
+        content.put("s", "20170728101532026951");
         content.put("external_id", "XKH06230429150190000");
 
         return content;
