@@ -203,7 +203,15 @@ public class DoTest extends BaseTest {
         System.out.println(dateTime);
     }
 
+    @Test
+    public void stringtest(){
+       String s1 = "1234";
+       String s2 = "1234.0";
 
+        System.out.println(new BigDecimal(12234).compareTo(new BigDecimal(s2)));
+        System.out.println(new BigDecimal(s2));
+        System.out.println(s1.compareTo(s2));
+    }
 
 
 

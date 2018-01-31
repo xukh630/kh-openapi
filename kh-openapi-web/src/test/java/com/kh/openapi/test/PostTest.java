@@ -16,9 +16,11 @@ import org.junit.Test;
 import org.testng.collections.Maps;
 
 import javax.annotation.Resource;
+import javax.xml.bind.SchemaOutputResolver;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +41,7 @@ public class PostTest extends BaseTest {
 
     //private final String method = "fshows.liquidation.submerchant.alipay.trade.precreate";	    //支付宝－扫码支付接口
     //private final String method = "fshows.liquidation.submerchant.alipay.trade.pay";	            //支付宝－刷卡支付接口
-    private final String method = "fshows.liquidation.submerchant.query";	                        //商户查询接口
+    //private final String method = "fshows.liquidation.submerchant.query";	                        //商户查询接口
     //private final String method = "fshows.liquidation.alipay.trade.query";	                    //支付宝－订单查询接口
     //private final String method = "fshows.liquidation.submerchant.bank.bind";	                    //帐户绑定接口
     //private final String method = "fshows.liquidation.wx.trade.precreate";	                    //微信扫码接口
@@ -47,7 +49,7 @@ public class PostTest extends BaseTest {
     //private final String method = "fshows.liquidation.wxpay.mppay";	                            //微信公众号/微信小程序支付接口
     //private final String method = "fshows.liquidation.finance.downloadbill";	                    //对帐单接口
     //private final String method = "fshows.liquidation.submerchant.rate.set";	                    //设置商户终端费率接口
-    //private final String method = "fshows.liquidation.submerchant.rate.query";	                //查询商户终端费率接口
+    private final String method = "fshows.liquidation.submerchant.rate.query";	                //查询商户终端费率接口
     //private final String method = "fshows.liquidation.wxpay.apppay";	                            //微信APP支付接口
     //private final String method = "fshows.liquidation.jdpay.h5pay";	                            //京东H5支付接口
     //private final String method = "fshows.liquidation.submerchant.alipay.trade.create";	        //支付宝H5支付接口
@@ -93,6 +95,7 @@ public class PostTest extends BaseTest {
     //private final String method = "fshows.liquidation.jd.merchant.create";	                    //京东商户入驻接口
     //private final String method = "fshows.liquidation.store.witness.unbind.bank";             	//见证宝会员账户解绑接口
     //private final String method = "fshows.liquidation.store.witness.bind.bank.verify.message";    //见证宝银联鉴权短信接口
+    //private final String method = "fshows.liquidation.jdpay.onlinepay";                           //京东线上支付接口
 
     //清算方名称:xukh
     String liquidatorId = "20170630091233203";
@@ -118,7 +121,7 @@ public class PostTest extends BaseTest {
 
         methods.invoke(orderService,params);*/
 
-        Map<String, Object> content = assemblyParamsQueryMerchant();
+        Map<String, Object> content = assemblyParamsQueryMerchantRate();
         data.put("app_id", liquidatorId);
         data.put("method", method);
         data.put("version", "1.0");
@@ -135,19 +138,45 @@ public class PostTest extends BaseTest {
 
     public Map<String, Object> assemblyParamsJdMerchantCreate() {
         Map<String, Object> content = Maps.newHashMap();
-        content.put("store_id", "20171116202306023891");
+        content.put("store_id", "20171116223741028636");
         content.put("business", "004");
         content.put("merchant_name", "(测试)商户名称");
         content.put("merchant_shortname", "(测试)商户简称");
         content.put("store_address", "(测试)商户地址");
+        content.put("flag","1");
+        content.put("agent_id1","18768154773");
+        content.put("name1","18768154773");
+        content.put("website","www.jd.com");
 
         return content;
     }
 
+    public Map<String, Object> assemblyParamsJdOnlinePay() {
+        Map<String, Object> content = Maps.newHashMap();
+        content.put("store_id", "20171116222406021502");
+        content.put("out_trade_no", "1432423454300002");
+        content.put("body", "测试商品1");
+        content.put("amount", "0.01");
+        content.put("callback_url", "http://jdpaydemo.jd.com/success.htm");
+        content.put("notify_url", "http://jdpaydemo.jd.com/asynNotify.htm");
+        content.put("order_type", "1");
+
+        return content;
+    }
+
+
     public Map<String,Object> assemblyParamsQueryMerchant(){
         Map<String, Object> content = Maps.newHashMap();
-        content.put("s", "20170728101532026951");
+        content.put("store_id", "20170728101532026951");
         content.put("external_id", "XKH06230429150190000");
+
+        return content;
+    }
+
+    public Map<String,Object> assemblyParamsQueryMerchantRate(){
+        Map<String, Object> content = Maps.newHashMap();
+        content.put("external_id", "20170728101532026951");
+        content.put("type", 6);
 
         return content;
     }
@@ -175,22 +204,8 @@ public class PostTest extends BaseTest {
     }
 
     public static void main(String[] args) {
-        /*Object testService = SpringUtils.getBean("testService");
-
-        System.out.println(testService.toString());
-        Set set = Sets.newHashSet();
-
-        User user = new User();
-        user.setId(1);
-
-        User user1 = new User();
-        user1.setId(1);
-
-        set.add(user);
-        set.add(user1);
-
-        System.out.println(set.size());*/
-        System.out.println(111);
+       String s = "NTipribFBcdykxKF/G97LkLyjmBxWLwYhUKEhow+yljhCcWpDwzBqeXYn1aQ9GPAmuN7R+S21kV6+\\r\\n0rt9LDOi0JBaVsx4iru3D0wWlMMNiD8WSz4iSepGNsZ/cpVRgaURm6lGnKi43gurQvWHWWJXRaLn+\\r\\nEH7Lh53n90NrErq3tpk=\\r\\n\n";
+        System.out.println(s);
 
     }
 }
