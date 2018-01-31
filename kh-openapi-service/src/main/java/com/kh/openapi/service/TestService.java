@@ -45,7 +45,7 @@ public class TestService implements ITestService {
         User user = new User();
         user.setUsername("徐楷洪");
         user.setPassword("123456");
-        userMapperExt.insert(user);
+        userMapperExt.insertSelective(user);
     }
 
     @Override

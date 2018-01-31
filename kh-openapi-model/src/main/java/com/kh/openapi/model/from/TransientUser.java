@@ -1,5 +1,7 @@
 package com.kh.openapi.model.from;
 
+import java.io.Serializable;
+
 /**
  * 所在的包名: com.kh.openapi.model.from
  * 所在的项目名：kh-openapi
@@ -8,8 +10,9 @@ package com.kh.openapi.model.from;
  * @Description:
  * @Date: Created in 21:25 2017/11/28
  */
-public class TransientUser {
+public class TransientUser implements Serializable{
 
+    private static final long serialVersionUID = 8882436580535884403L;
     private String username;
 
     private transient String password;
