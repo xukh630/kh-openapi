@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     @RequestMapping("/message")
-    public String message(@RequestParam("username") String username,
-                        @RequestParam("password") String password){
+    public String message(@RequestParam(value = "username",required = false) String username,
+                        @RequestParam(value = "password",required = false) String password){
 
 
-        return username+password;
+        return "result :" +username+password;
     }
 }
