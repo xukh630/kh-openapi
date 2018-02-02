@@ -3,14 +3,19 @@ package com.kh.openapi.test;
 import com.kh.openapi.common.utils.BigDecimalUtil;
 import com.kh.openapi.common.utils.DateUtil;
 import com.kh.openapi.common.utils.JsonUtil;
+import com.kh.openapi.common.utils.ResourceUtil;
 import com.kh.openapi.model.User;
+import com.kh.openapi.model.loopAutowitre.ResourceTest1;
 import com.kh.openapi.model.testClass.IsBlank;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringExclude;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.testng.collections.Lists;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,6 +33,14 @@ import java.util.stream.IntStream;
  * @Date: Created in 17:22 2017/12/21
  */
 public class DoTest extends BaseTest {
+
+    @Resource
+    ResourceTest1 resourceTest1;
+
+    @Test
+    public void resourceTest1() throws Exception {
+        resourceTest1.deiLoop();
+    }
 
     @Test
     public void test(){
@@ -213,7 +226,20 @@ public class DoTest extends BaseTest {
         System.out.println(s1.compareTo(s2));
     }
 
+    public static void main(String[] args) {
+        String liquidatorIdString = ResourceUtil.getSystem("test.import.data");
 
+        System.out.println(liquidatorIdString);
+
+        if (StringUtils.isNotBlank(liquidatorIdString)) {
+            String[] liquidatorIds = liquidatorIdString.split(",");
+            if (!ArrayUtils.contains(liquidatorIds,"123")) {
+                System.out.println("暂无接口权限");
+            }
+        }
+
+        System.out.println("no problem");
+    }
 
 
 

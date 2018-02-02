@@ -13,15 +13,15 @@ import org.junit.runners.BlockJUnit4ClassRunner;
  * @Date: Created in 21:07 2018/1/4
  */
 @RunWith(BlockJUnit4ClassRunner.class)
-public class iocBeanTest  {
+public class IocBeanTest  {
 
-    public iocBeanTest(){
+    private String iocBeanTest;
 
+    public String getIocBeanTest() {
+        return iocBeanTest;
     }
 
-    @Test
-    public void test(){
-
+    public void setIocBeanTest(String iocBeanTest) {
+        this.iocBeanTest = iocBeanTest;
     }
-
 }

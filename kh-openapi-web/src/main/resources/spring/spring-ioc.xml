@@ -8,5 +8,10 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <bean name="user" class="com.kh.openapi.model.ioc.iocBeanTest"></bean>
+    <bean name="user" class="com.kh.openapi.model.ioc.IocBeanTest"></bean>
+
+    <bean id="circleA" class="com.kh.openapi.model.loopAutowitre.CircleA"/>
+
+
+
 </beans>
